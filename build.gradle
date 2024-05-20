@@ -41,6 +41,10 @@ dependencies {
 
 	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}:jakarta"
 
+	// 썸네일 만들때 사용
+	// https://mvnrepository.com/artifact/net.coobird/thumbnailator
+	implementation 'net.coobird:thumbnailator:0.4.20'
+
 
 	annotationProcessor(
 

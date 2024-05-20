@@ -1,0 +1,29 @@
+package org.zerock.mallapi.repository;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.EntityGraph;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.zerock.mallapi.domain.Product;
+import org.zerock.mallapi.repository.search.ProductSearch;
+
+import java.util.Optional;
+
+public interface ProductRepository extends JpaRepository<Product, Long> , ProductSearch {
+
+    @EntityGraph(attributePaths = "imageList") // 한번에 join해서 imageList 가져오도록
+    @Query("select p from Product p where p.id = :pno")
+    Optional<Product> selectOne(@Param("pno") Long pno);
+
+    // update는 안되면 무조건 예외기때문에 리턴값은 void로
+    @Modifying // 수정시에는 해당 어노테이션을
+    @Query("update Product p set p.delFlag = :delFlag where p.id = :pno")
+    void updateToDelete(@Param("pno") Long pno, @Param("delFlag") boolean delFlag);
+
+    // join해서 값을 직접 뽑을 것이므로 Object 타입으로 선언
+    @Query("select p, pi from Product p left join p.imageList pi where pi.ord = 0 and p.delFlag = false")
+    Page<Object[]> selectList(Pageable pageable);
+}
