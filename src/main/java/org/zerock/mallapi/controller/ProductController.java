@@ -82,6 +82,8 @@ public class ProductController {
         // 이전과 같게 유지되는 파일들(uploadFileNames) + 새롭게 더한 파일들
         List<String> uploadedFileNames = productDTO.getUploadFileNames();
         if (currentUploadFileNames != null && !currentUploadFileNames.isEmpty()) {
+            // uploadedFileNames가 productDTO.getUploadFileNames() 리스트를 참조하고 있기 때문에,
+            // uploadedFileNames에 대한 변경이 곧 productDTO.getUploadFileNames() 리스트의 변경을 의미
             uploadedFileNames.addAll(currentUploadFileNames);
         }
         // 수정
