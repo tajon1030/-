@@ -38,12 +38,25 @@ dependencies {
 	testAnnotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+
 
 	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}:jakarta"
 
 	// 썸네일 만들때 사용
 	// https://mvnrepository.com/artifact/net.coobird/thumbnailator
 	implementation 'net.coobird:thumbnailator:0.4.20'
+
+	// https://mvnrepository.com/artifact/com.google.code.gson/gson
+	implementation 'com.google.code.gson:gson:2.10.1'
+
+	// jwt를 만들고, 외부에서 들어오는 jwt문자열 검증을 위해
+	// https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-api
+	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+	// https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-impl
+	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+	// https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-jackson
+	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
 
 
 	annotationProcessor(
