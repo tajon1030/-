@@ -8,6 +8,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.zerock.mallapi.dto.MemberDTO;
+import org.zerock.mallapi.util.JWTUtil;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -28,8 +29,10 @@ public class ApiLoginSuccessHandler implements AuthenticationSuccessHandler {
 
         Map<String, Object> claims = memberDTO.getClaims();
 
-        claims.put("accessToken", "");
-        claims.put("refreshToken", "");
+        String accessToken = JWTUtil.generateToken(claims, 10); // 지금당장사용할수있는 토큰
+        String refreshToken = JWTUtil.generateToken(claims, 60 * 24); // 일종의 교환권
+        claims.put("accessToken", accessToken);
+        claims.put("refreshToken", refreshToken);
 
         // Map형태로 만든 claims를 json형식으로 만들기 (gson이용)
         Gson gson = new Gson();
