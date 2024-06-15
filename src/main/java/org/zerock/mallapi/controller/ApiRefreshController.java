@@ -15,7 +15,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class ApiRefreshController {
 
-    @RequestMapping("/api/memger/refresh")
+    @RequestMapping("/api/member/refresh")
     public Map<String, Object> refresh(
             @RequestHeader("Authorization") String authHeader,
             String refreshToken
