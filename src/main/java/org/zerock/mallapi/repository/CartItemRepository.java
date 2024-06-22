@@ -3,7 +3,6 @@ package org.zerock.mallapi.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.security.core.parameters.P;
 import org.zerock.mallapi.domain.CartItem;
 import org.zerock.mallapi.dto.CartItemListDTO;
 
@@ -15,12 +14,12 @@ public interface CartItemRepository extends JpaRepository<CartItem, Long> {
     // input -> email
     // output -> cartItemListDTO
     @Query("select " +
-            " new org.zerock.mallapi.dto.CartItemListDTO(ci.cino, ci.qty, p.pname, p.price , pi.fileName ) "+
+            " new org.zerock.mallapi.dto.CartItemListDTO(ci.cino, ci.qty, p.pname, p.price, p.id, pi.fileName ) " +
             " from " +
             " CartItem ci inner join Cart mc on ci.cart = mc " +
-            " left join Product p on ci.product= p "+
-            " left join p.imageList pi"+
-            " where "+
+            " left join Product p on ci.product= p " +
+            " left join p.imageList pi" +
+            " where " +
             " mc.owner.email = :email and pi.ord = 0 " +
             " order by ci desc ")
     List<CartItemListDTO> getItemsOfCartDTOByEmail(@Param("email") String email);
@@ -47,7 +46,7 @@ public interface CartItemRepository extends JpaRepository<CartItem, Long> {
 
     // 장바구니 번호를 이용하여 모든 장바구니 아이템 조회
     @Query("""
-            select new org.zerock.mallapi.dto.CartItemListDTO(ci.cino, ci.qty, p.pname, p.price , pi.fileName )
+            select new org.zerock.mallapi.dto.CartItemListDTO(ci.cino, ci.qty, p.pname, p.price, p.id, pi.fileName )
             from CartItem ci
             inner join Cart c on ci.cart = c
             left join Product p on ci.product = p
